@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    .btnLeft,
+    .btnRight {
+      padding: 8px 32px;
+      border: none;
+      background: #8c26d0;
+      border-radius: 4px;
+      color: white;
+      cursor: pointer;
+      font-size: 32px;
+      margin-top: 10px;
+    }
+
+    .btnLeft:hover,
+    .btnRight:hover {
+      background: #8c26d0c9;
+    }
+  </style>
+  <body>
+    <div class="container">
+      <div class="imgContainer">
+        <img src="/assets/img1.avif" alt="img1" class="img" />
+      </div>
+      <div>
+        <button class="btnLeft" onclick="shiftLeft()"><</button>
+        <button class="btnRight" onclick="shiftRight()">></button>
+      </div>
+    </div>
+
+    <script>
+      const images = ["img1.avif", "img2.avif", "img3.avif"];
+
+      const img = document.querySelector(".img");
+      img.style.width = "500px";
+      img.style.borderRadius = "8px";
+
+      let imgCounter = 0;
+
+      function shiftLeft() {
+        if (imgCounter < 0) {
+          imgCounter = images.length - 1;
+        } else {
+          img.src = `/assets/${images[imgCounter]}`;
+          imgCounter--;
+        }
+      }
+
+      function shiftRight() {
+        console.log("right");
+
+        if (imgCounter > images.length - 1) {
+          imgCounter = 0;
+          console.log("right1", imgCounter);
+        } else {
+          img.src = `/assets/${images[imgCounter]}`;
+          imgCounter++;
+          console.log("right2", imgCounter);
+        }
+      }
+    </script>
+  </body>
+</html>

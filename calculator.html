@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator Time based</title>
+    <style>
+        .inputBox{
+            border: 1px dotted black;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 4px;
+            border-radius: 4px;
+            
+        }
+
+        .inputField{
+
+            border: none;
+            background: #f2f2f2;
+            padding: 6px;
+            box-shadow: 0px 1px 3px rgba(0, 0, 0, .15);
+            outline: none;
+            color: orange;
+        }
+        .btnCal{
+            padding: 6px 12px;
+            border:1px solid orange;
+            border-radius: 4px;
+            background: transparent;
+            color: orange;
+            margin-top: 10px;
+        }
+
+        .btnCal:hover{
+            border-color:white;
+            background: orange;
+            color: white;
+            cursor: pointer;
+        }
+
+        .btmBox{
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #resultBox{
+            display: flex;
+            gap: 2px;
+            align-items: center;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <div class="inputBox">
+            <label for="inp1">Enter First Number</label>
+            <input type="text" id="inp1" name="inp1" class="inputField" placeholder="enter number ....">
+        </div>
+        <div class="inputBox">
+            <label for="inp2">Enter Second Number</label>
+            <input type="text" id="inp2" name="inp2" class="inputField" placeholder="enter number ....">
+        </div>
+
+        <div class="btmBox">
+            <div id="resultBox">Result: <span></span>
+            </div>
+            <button onclick="Calculate()" class="btnCal">Calculate</button>
+        </div>
+
+        <!-- script is here  -->
+        <script>
+            
+            const container=document.querySelector("#container");
+            const resultBox=document.querySelector("#resultBox > span");
+
+            // container styling via js 
+            container.style.height="200px";
+            container.style.width="600px";
+            container.style.background="#f2f2f2";
+            container.style.padding="20px";
+            container.style.borderRadius="8px"
+
+            // resultbox styling via js 
+            resultBox.style.width="200px";
+            resultBox.style.background="orange";
+            resultBox.style.padding="20px";
+            resultBox.style.borderRadius="4px";
+            resultBox.style.color="#fff";
+            resultBox.style.display="flex";
+            resultBox.style.justifyContent="center";
+            resultBox.style.alignItems="center";
+
+            // Calculate func
+            function Calculate(){
+                const optionChosen=prompt("enter 1 for add, 2 for sub, 3 for mul, 4 for div, 5 for mod");
+                let count=10;
+                
+                const timer=setInterval(()=>{
+                resultBox.innerText= `Result will be out in ${count}`;
+                count--;
+                if(count === 0){
+                    Calculation(optionChosen)
+                    clearInterval(timer);
+                }
+                },1000) 
+                
+                }
+
+            
+            // Calculation func
+            function Calculation(selected){
+
+               console.log("calculation is invoked")
+                const inp1=document.querySelector("#inp1");
+                const inp2=document.querySelector("#inp2");
+
+
+                if(selected == "1"){
+                    resultBox.innerText= parseInt(inp1.value) + parseInt(inp2.value);
+                    
+                    
+                }
+                else if(selected == "2"){
+                    resultBox.innerText= parseInt(inp1.value) - parseInt(inp2.value);
+                    
+                }
+                else if(selected == "3"){
+                    resultBox.innerText= parseInt(inp1.value) * parseInt(inp2.value);
+                    
+                }
+                else if(selected == "4"){
+                    resultBox.innerText= parseInt(inp1.value) / parseInt(inp2.value);
+                    
+                }
+                else if(selected == "5"){
+                    resultBox.innerText= parseInt(inp1.value) % parseInt(inp2.value);
+                    
+                }
+                else
+                {
+                    resultBox.innerText= "Select a proper option"
+                }
+                
+            }
+        </script>
+    </div>
+</body>
+</html>

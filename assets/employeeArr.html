@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+    .container{
+        background: #f2f2f2;
+        border-radius: 4px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 12px;
+        padding: 20px;
+    }
+    input{
+        padding: 16px 8px;
+        width: 50%;
+        border:none;
+       outline: none;
+        border-radius: 2px;
+    }
+    input:focus{
+         outline:1px solid orange;
+    }
+    button{
+
+        padding: 12px 8px;
+        border: none;
+        border-radius: 4px;
+        color: #f2f2f2;
+    }
+
+    .addBtn{
+        background: rgb(37, 160, 226);
+    }
+    .showBtn{
+        background: rgb(97, 179, 20);
+    }
+
+    table{
+
+        
+        color: gray;
+        padding: 20px;
+        gap: 10px;
+    }
+
+th, td {
+  
+  border-bottom: 1px solid #ddd;
+}
+
+th, td ,tr{
+  padding: 10px;
+  text-align: left;
+  width: 100px;
+   background-color: rgb(42, 40, 40);
+   border-radius: 4px;
+   color: #f2f2f2;
+}
+
+</style>
+<body>
+    <div class="container">
+
+        
+        <input type="text" id="Name" placeholder="Name">
+        <input type="number" id="Salary" placeholder="Salary">
+
+        <div class="employeeListContainer">
+            <table id="empList">
+                
+            </table>
+        </div>
+
+        <div class="btn-container">
+            <button class="addBtn" onclick="addEmployee()">Add Employee</button>
+        <button class="showBtn" onclick="showEmployees()">Show Employees</button>
+        </div>
+
+        <script>
+           
+           const Name= document.querySelector("#Name");
+           const Salary= document.querySelector("#Salary");
+
+           const empList= document.querySelector("#empList");
+
+           const employeeArr=[];
+           
+
+             const  addEmployee =function(){
+                
+                let employee={};
+                const id= Math.floor(Date.now() / 1000);
+                employee.Id=id;
+                employee.Name=Name.value;
+                employee.Salary=parseInt(Salary.value);
+                employeeArr.push(employee);
+                console.log(employeeArr);
+             }
+
+             
+             const showEmployees=()=>{
+                let listItems="";
+                employeeArr.forEach(emp=>{
+                    listItems+=` <tr>
+                    <td>${emp.Id}</td>
+                    <td>${emp.Name}</td>
+                    <td>${emp.Salary}</td>
+                </tr>`
+                })
+
+                empList.innerHTML=`<tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Salary</th>
+                </tr>
+            ${listItems}`;
+             }
+        </script>
+    </div>
+</body>
+</html>
