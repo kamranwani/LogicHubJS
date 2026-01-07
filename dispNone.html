@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+    .empNode{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border: 1px solid #f2f2f2;
+        padding: 2px;
+        width: 80%;
+    }
+    
+    .container{
+        background: #f2f2f2;
+        border-radius: 4px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        padding: 20px;
+    }
+    input,textarea{
+        padding: 8px 4px;
+
+        border:none;
+       outline: none;
+        border-radius: 2px;
+        margin-bottom: 4px;
+    }
+    input:focus{
+         outline:1px solid orange;
+    }
+    button{
+
+        padding: 12px 8px;
+        border: none;
+        border-radius: 4px;
+        color: #000000;
+        cursor: pointer;
+    }
+   .form{
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    justify-content: left;
+    align-items: start;
+    width: 50%;
+    
+   }
+.actionBtns{
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    align-items: center;
+}
+.top{
+    display: flex;
+}
+.searchAre{
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    align-items: center;
+}
+</style>
+<body>
+    <div class="container">
+        <div class="top">
+            <div class="form">
+                <input type="text" placeholder="enter Name" id="empName">
+                <div class="empRadioBtn">
+                    <div class="empRadio">
+                        <label for="Male">Male</label>
+                        <input type="radio"  name="empGender" value="Male">
+                    </div>
+                    <div class="empRadio">
+                        <label for="Female">Female</label>
+                        <input type="radio" name="empGender" value="Female">
+                    </div>
+                </div>
+                <input type="number"  id="empNumber" placeholder="enter number">
+                <button id="addEmp">Add Employee</button>
+            </div>
+            <div class="searchArea">
+                <input type="text" placeholder="type to search" id="search">
+                <div id="dspSearchRes">
+
+                </div>
+            </div>
+        </div>
+        <div id="dspEmployee">
+            <h1>Employees Table</h1>
+            <div class="empNode">
+                <p>Id</p>
+                <p>Name</p>
+                <p>Gender</p>
+                <p>Number</p>
+                <p>Action</p>
+            </div>
+            <div id="dspContainer">
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const empName=document.querySelector("#empName");
+        
+        const empNumber=document.querySelector("#empNumber");
+        const dspContainer=document.querySelector("#dspContainer");
+        const addEmp=document.querySelector("#addEmp");
+          const search=document.querySelector("#search");
+          const dspSearchRes=document.querySelector("#dspSearchRes");
+
+
+        let EmpList=[];
+
+        EmpList.push({
+            id:Date.now(),
+            Name:"Kamran",
+            Gender:"Male",
+            Number:"7006704866"
+        },{
+            id:Date.now()+1,
+            Name:"Aqib",
+            Gender:"Male",
+            Number:"1234567891"
+        })
+        function showEmployees(list){
+            let content="";
+            list.forEach(emp=>{
+                content+=`<div class="empNode"> <p> ${emp.id}</p> <p> ${emp.Name}</p><p> ${emp.Gender}</p><p> ${emp.Number}</p><div class="actionBtns"> <a><button class="empBtn" id=${emp.id}> Delete</button></a> <a href="/editEmployee.html?id=${emp.id}&empName=${emp.Name}&empGender=${emp.Gender}&empNumber=${emp.Number}"><button class="empBtn"> Edit</button></a> <a href="/detailsEmployee.html?id=${emp.id}&empName=${emp.Name}&empGender=${emp.Gender}&empNumber=${emp.Number}"><button class="empBtn"> Details</button></a></div></div>`
+           
+        })
+         dspContainer.innerHTML=content;
+        }
+
+        showEmployees(EmpList);
+        
+        addEmp.addEventListener("click",(event)=>{
+            const empGender=document.querySelector('input[name="empGender"]:checked')
+            if (!empGender) {
+                alert("Please select gender");
+                return;
+                }
+            const emp={
+                id:Date.now(),
+                Name:empName.value,
+                Gender:empGender.value,
+                Number:empNumber.value
+            }
+            EmpList.push(emp);
+            empName.value="";
+            empGender.checked=false;
+            empNumber.value="";
+            showEmployees(EmpList);
+        })
+
+        dspContainer.addEventListener("click",(event)=>{
+            if(event.target.tagName =="BUTTON" &&  event.target.innerText =="Delete"){
+                console.log(event.target.id);
+                const updatedEmpList=EmpList.filter(emp=> emp.id != event.target.id);
+                EmpList=updatedEmpList;
+                showEmployees(EmpList);
+
+            }
+        })
+
+        search.addEventListener("keyup",()=>
+        {
+            let query=search.value.toLowerCase();
+            const filteredList=EmpList.filter(emp=>{
+               return  emp.Name.toLowerCase().includes(query);
+               
+            })
+            let searchRes="" ;
+            if(filteredList.length>0){
+                filteredList.forEach(emp=>{
+                 searchRes +=`<div class="empNode"> <p> ${emp.Name}</p><p> ${emp.Number}</p></div>`;
+                
+            })
+            dspSearchRes.innerHTML=searchRes;
+            }else dspSearchRes.innerHTML="no result"
+        })
+    </script>
+</body>
+</html>

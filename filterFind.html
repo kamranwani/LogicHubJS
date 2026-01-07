@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+    .employeeAdd{
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+    .empRadioBtn{
+        display: flex;
+        gap: 12px;
+        width: 100%;
+        padding: 0px 8px;
+    }
+     .empRadioBtn>div{
+        display: flex;
+        width: 10%;
+    }
+     .container{
+        background: #f2f2f2;
+        border-radius: 4px;
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+       
+        gap: 12px;
+        padding: 20px;
+    }
+    input,textarea{
+        padding: 16px 8px;
+        width: 30%;
+        border:1px solid #f2f2f2;
+       outline: none;
+        border-radius: 4px;
+        margin-bottom: 4px;
+        background-color: #fff;
+    }
+    input:focus{
+         outline:1px solid orange;
+    }
+    button{
+
+        padding: 12px 8px;
+        border: none;
+        border-radius: 4px;
+        color: #000000;
+        cursor: pointer;
+    }
+</style>
+<body>
+    <div class="container">
+         <div class="top">
+            <div class="employeeAdd">
+                <h2>Add an Employee</h2>
+                <input id="empName" type="text" placeholder="employee name ...">
+                <input type="text" id="empNumber"  placeholder="employee number ...">
+                <div class="empRadioBtn">
+                    <div>
+                        <label for="Male">Male</label>
+                        <input type="radio" id="empGender"  name="empGender" value="Male">
+                    </div>
+                    <div>
+                        <label for="Female">Female</label>
+                        <input type="radio" id="empGender"  name="empGender" value="Female">
+                    </div>
+                </div>
+                <input type="number" id="empSalary"  placeholder="emp salary ...">
+            </div>
+            <div class="empsearch">
+                <input type="text" id="empsearch" placeholder="search by name">
+                <button>searchByName</button>
+                <div id="empSearchResult">
+
+                </div>
+            </div>
+         </div>
+
+         <div class="employeelist">
+
+         </div>
+    </div>
+
+    <script>
+        // const empName
+    </script>
+</body>
+</html>

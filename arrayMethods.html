@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    #productDisplayArea{
+        display: grid;
+        grid-template-columns: 1;
+    }
+    .prodRow{
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+    }
+
+    .container{
+        background: #f2f2f2;
+        border-radius: 4px;
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+       
+        gap: 12px;
+        padding: 20px;
+    }
+    input,textarea{
+        padding: 16px 8px;
+        width: 50%;
+        border:none;
+       outline: none;
+        border-radius: 2px;
+        margin-bottom: 4px;
+    }
+    input:focus{
+         outline:1px solid orange;
+    }
+    button{
+
+        padding: 12px 8px;
+        border: none;
+        border-radius: 4px;
+        color: #000000;
+        cursor: pointer;
+    }
+h3{
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+span{
+    font-size: 8px;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+.btn-container{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 20px;
+    
+}
+.slice{
+    grid-column: span 3;
+    background-color: white;
+    color: #2b2b2b;
+    padding: 20px;
+    
+    gap: 6px;
+    justify-content: space-between;
+    align-items: start;
+    display: flex;
+}
+.splice{
+    grid-column: span 3;
+    background-color: white;
+    color: #2b2b2b;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    justify-content: start;
+    align-items: start;
+}
+.splice-btn{
+    display: flex;
+    gap: 8px;
+}
+.splice-disp{
+    display: flex;
+    gap: 20px;
+}
+.product-view{
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+}
+</style>
+<body>
+    <div class="container">
+        <div class="">
+            <div class="product-view">
+                <div>
+                <h2>Add a Product</h2>
+                <input id="productName" type="text" placeholder="product name ...">
+                <input type="number" id="productPrice"  placeholder="product price ...">
+                <input type="quantity" id="productQuantity"  placeholder="product quantity ...">
+                <textarea type="text" id="productDescription" placeholder="product description ..."></textarea>
+            </div>
+            <div>
+                 <!-- Products displayed here  -->
+                <h2>Products are:</h2>
+                <div class="prodRow">
+                        <p>Id</p>
+                        <p>Name</p>
+                        <p>Price</p>
+                        <p>Quantity</p>
+                        <p>Description</p>
+                </div>
+                <div id="productDisplayArea">
+                    
+                </div>
+            </div>
+            </div>
+            <div class="btn-container">
+                <div>
+                    <h2>Push Pop</h2>
+                    <div class="pushpop">
+                        <h3>responsible for adding and removing at the end</h3>
+                        <button onclick="addProduct()">Add Product (Push)</button>
+                        <button onclick="removeProduct()">Remove Product (Pop)</button>
+                    </div>
+                </div>
+                <div>
+                        <h2>Shift Unshift</h2>
+
+                    <div class="shiftunshift">
+                        <h3>responsible for adding and removing at the beggining</h3>
+                        <button onclick="shiftProduct()">Remove Product (Shift)</button>
+                        <button onclick="unshiftProduct()">Add Product (Unshift)</button>
+                    </div>
+                </div>
+                <div class="slice">
+                    <div class="slice-head">
+                        <h2> Slice</h2>
+                        <h3>Top rated Products (responsible for getting specific range of prducts)</h3>
+                        <div>
+                            <input type="text" id="sliceStartIndex"  placeholder="enter starting index">
+                            <div>
+                                <input type="text" id="sliceEndIndex"  placeholder="enter ending index ">
+                                <span>do not add anything here if you want array till the end</span>
+                            </div>
+
+                        </div>
+                        <button onclick="sliceProducts()">Get Products</button>
+                    </div>
+                    <!-- top rate products here  -->
+                        <div>
+                            <h2>Top Rated Products are:</h2>
+                            <div class="prodRow">
+                                <p>Id</p>
+                                <p>Name</p>
+                                <p>Price</p>
+                                <p>Quantity</p>
+                                <p>Description</p>
+                            </div>
+                            <div id="updatedProductDisplayArea">
+                            
+                            </div>
+                        </div>
+                </div>
+
+                <div class="splice">
+                    <h2> Splice</h2>
+
+                    <div class="splice-disp" >
+                        <div>
+                            <h3>responsible for adding or removing  range of prducts at any specific position</h3>
+                            <input type="text" id="spliceStartIndex"  placeholder="enter starting index">
+                            <input type="text" id="spliceCount"  placeholder="enter number of items">
+                            <div>
+                                <h2>Add items one by one to be inserted or replaced</h2>
+                                <input type="text" id="tempProductName" placeholder="product name ...">
+                                <input type="number" id="tempPrice" placeholder="product price ...">
+                                <input type="quantity" id="tempQuantity" placeholder="product quantity ...">
+                                <textarea type="text" id="tempDescription"  placeholder="product description ..."></textarea>
+                            </div>
+                            <div class="splice-btn">
+                                <button onclick="addTempProducts">Temp Product</button>
+                                <button onclick="addToMainProductList">Add Temp List to Main List</button>
+
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="spliceProduccts()">Get Products</button>
+                </div>
+            </div>
+        </div>
+       
+
+        
+    </div>
+
+    <script>
+        const productDisplayArea=document.querySelector("#productDisplayArea");
+        const updatedProductDisplayArea=document.querySelector("#updatedProductDisplayArea");
+        // main product add 
+        const productName=document.querySelector("#productName");
+        const productPrice=document.querySelector("#productPrice");
+        const productQuantity=document.querySelector("#productQuantity");
+        const productDescription=document.querySelector("#productDescription");
+
+        // slice inputs 
+        const sliceStartIndex=document.querySelector("#sliceStartIndex");
+        const sliceEndIndex=document.querySelector("#sliceEndIndex");
+
+        // splice inputs 
+        const spliceStartIndex=document.querySelector("#spliceStartIndex");
+        const spliceCount=document.querySelector("#spliceCount");
+
+        const tempProductName=document.querySelector("#tempProductName");
+        const tempProductPrice=document.querySelector("#tempProductPrice");
+        const tempProductQuantity=document.querySelector("#tempProductQuantity");
+        const tempProductDescription=document.querySelector("#tempProductDescription");
+
+        let Products=[];
+        console.log(Products.length);
+
+
+        // render product 
+
+        function renderProduct(){
+            console.log("render method")
+
+            if(Products.length==0){
+                productDisplayArea.innerText="Nothing to Display";
+                return;
+            }
+            productDisplayArea.innerHTML = ""; 
+            Products.forEach(prod=>{
+                    productDisplayArea.innerHTML +=`
+                                                <div class="prodRow">  
+                                                    <p>${prod.id}</p>
+                                                    <p>${prod.name}</p>
+                                                    <p>${prod.price}</p>
+                                                    <p>${prod.quantity}</p>
+                                                    <p>${prod.description}</p>
+                                                </div>`
+                })
+                
+        }
+        // push method 
+        function addProduct(){
+            const productId=Date.now();
+            const product={
+                id:productId,
+                name:productName.value,
+                price:productPrice.value,
+                quantity:productQuantity.value,
+                description:productDescription.value,
+            }
+            if(!productName.value && !productPrice.value && !productQuantity.value && !productDescription.value){
+                alert("please add all the fields first");
+                return
+                
+            } 
+            Products.push(product);
+            productName.value ="";
+            productPrice.value ="";
+            productQuantity.value="";
+            productDescription.value="";
+
+                renderProduct();
+
+            
+        }
+
+        // pop method 
+        function removeProduct(){
+            Products.pop();
+            if(Products.length>0){
+                productDisplayArea.innerText="Nothing to Display";}
+                renderProduct();
+            }
+
+
+        // shift method
+        function unshiftProduct(){
+            const productId=Date.now();
+            const product={
+                id:productId,
+                name:productName.value,
+                price:productPrice.value,
+                quantity:productQuantity.value,
+                description:productDescription.value,
+            }
+            if(!productName.value && !productPrice.value && !productQuantity.value && !productDescription.value){
+                alert("please add all the fields first");
+                return
+                
+            } 
+            Products.unshift(product);
+            productName.value ="";
+            productPrice.value ="";
+            productQuantity.value="";
+            productDescription.value="";
+
+                renderProduct();
+        }
+
+        //unshift method
+        function shiftProduct(){
+             Products.shift();
+            if(Products.length>0){
+                productDisplayArea.innerText="Nothing to Display";}
+                renderProduct();
+        }
+
+        //slice method
+        function sliceProducts(){
+            const startIndex=sliceStartIndex.value;
+            const endIndex=sliceEndIndex.value;
+
+            if(!sliceStartIndex){
+                alert ("add starting index");
+                return;
+            }
+            
+            const updateProductList=Products.slice(startIndex,endIndex);
+            if(updateProductList){
+                updatedProductDisplayArea.innerHTML="";
+                updateProductList.forEach(prod=>{
+                    updatedProductDisplayArea.innerHTML+=`
+                                                <div class="prodRow">  
+                                                    <p>${prod.id}</p>
+                                                    <p>${prod.name}</p>
+                                                    <p>${prod.price}</p>
+                                                    <p>${prod.quantity}</p>
+                                                    <p>${prod.description}</p>
+                                                </div>`
+                })
+            }
+        }
+    </script>
+</body>
+</html>
