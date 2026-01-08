@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+     .container{
+        background: #f2f2f2;
+        border-radius: 4px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        padding: 20px;
+    }
+
+    input,textarea{
+        padding: 8px 4px;
+
+        border:none;
+       outline: none;
+        border-radius: 2px;
+        margin-bottom: 4px;
+    }
+    input:focus{
+         outline:1px solid orange;
+    }
+    .detailsForm{
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    justify-content: left;
+    align-items: start;
+    width: 50%;
+    box-shadow: 1px 1px 8px rgba(0, 0, 0, .15);
+    border-radius: 12px;
+    padding: 10px;
+   }
+   .empRadioBtn{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-items: center;
+}
+.empRadio{
+    display: flex;
+    gap: 1px;
+    align-items: center;
+    justify-items: center;
+}
+</style>
+<body>
+    <div class="container">
+        <div class="detailsForm">
+            <input type="text" id="id" disabled>
+            <input type="text" id="name">
+            <input type="number" id="number">
+            <div class="empRadioBtn">
+                    <p>Gender:</p>
+                    <div class="empRadio">
+                        <label for="Male">Male</label>
+                        <input type="radio"  name="empGender" value="Male" id="Male">
+                    </div>
+                    <div class="empRadio">
+                        <label for="Female">Female</label>
+                        <input type="radio" name="empGender" value="Female" id="Female">
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        const inputId =document.querySelector("#id");
+        const inputName =document.querySelector("#name");
+        const inputNumber =document.querySelector("#number");
+        const inputGender =document.querySelectorAll('input[name="empGender"]');
+
+      
+
+        const search = new URLSearchParams(window.location.search);
+        const queryString=new URLSearchParams(search);
+
+        const id=queryString.get("id");
+        const name=queryString.get("empName")
+        const number=queryString.get("empNumber")
+        const gender=queryString.get("empGender")
+        console.log(id,name,number,gender);
+
+          inputId.value=id;
+          inputName.value=name;
+          inputNumber.value=number;
+
+          inputGender.forEach(inp=>{
+            if(inp.value==gender){
+                inp.checked=true;
+            }
+          })
+    </script>
+</body>
+</html>

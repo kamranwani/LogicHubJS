@@ -8,12 +8,15 @@
 
 <style>
     .empNode{
-        display: flex;
-        justify-content: space-between;
+        display: grid;
+        grid-template-columns: repeat(5,1fr);
         align-items: center;
-        border: 1px solid #f2f2f2;
+        border: 1px solid #1c1a1a;
         padding: 2px;
         width: 80%;
+        background-color: #333333;
+        margin: 1px;
+        color: #f2f2f2;
     }
     
     .container{
@@ -50,30 +53,55 @@
     justify-content: left;
     align-items: start;
     width: 50%;
-    
+    box-shadow: 1px 1px 8px rgba(0, 0, 0, .15);
+    border-radius: 12px;
+    padding: 10px;
    }
 .actionBtns{
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
     gap: 3px;
-    align-items: center;
+    /* align-items: center; */
 }
 .top{
     display: flex;
 }
-.searchAre{
+.searchArea{
     display: flex;
     flex-direction: column;
-    gap: 3px;
+    gap: 10px;
     align-items: center;
+    /* border: 1px solid black; */
+    width: 50%;
+    justify-content: start;
+}
+.searchArea>input{
+    width: 80%;
+    padding: 20px;
+    border-radius: 4px;
+    background: #333333;
+}
+.empRadioBtn{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-items: center;
+}
+.empRadio{
+    display: flex;
+    gap: 1px;
+    align-items: center;
+    justify-items: center;
 }
 </style>
 <body>
     <div class="container">
         <div class="top">
             <div class="form">
+                <h2>Enter Details to Add Employee</h2>
                 <input type="text" placeholder="enter Name" id="empName">
                 <div class="empRadioBtn">
+                    <p>Gender:</p>
                     <div class="empRadio">
                         <label for="Male">Male</label>
                         <input type="radio"  name="empGender" value="Male">
@@ -134,7 +162,7 @@
         function showEmployees(list){
             let content="";
             list.forEach(emp=>{
-                content+=`<div class="empNode"> <p> ${emp.id}</p> <p> ${emp.Name}</p><p> ${emp.Gender}</p><p> ${emp.Number}</p><div class="actionBtns"> <a><button class="empBtn" id=${emp.id}> Delete</button></a> <a href="/editEmployee.html?id=${emp.id}&empName=${emp.Name}&empGender=${emp.Gender}&empNumber=${emp.Number}"><button class="empBtn"> Edit</button></a> <a href="/detailsEmployee.html?id=${emp.id}&empName=${emp.Name}&empGender=${emp.Gender}&empNumber=${emp.Number}"><button class="empBtn"> Details</button></a></div></div>`
+                content+=`<div class="empNode"> <p> ${emp.id}</p> <p> ${emp.Name}</p><p> ${emp.Gender}</p><p> ${emp.Number}</p><div class="actionBtns"> <a><button class="empBtn" id=${emp.id}> Delete</button></a> <a href="/params-assigment/editEmployee.html?id=${emp.id}&empName=${emp.Name}&empGender=${emp.Gender}&empNumber=${emp.Number}"><button class="empBtn"> Edit</button></a> <a href="/params-assigment/detailsEmployee.html?id=${emp.id}&empName=${emp.Name}&empGender=${emp.Gender}&empNumber=${emp.Number}"><button class="empBtn"> Details</button></a></div></div>`
            
         })
          dspContainer.innerHTML=content;
